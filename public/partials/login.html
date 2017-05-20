@@ -1,0 +1,29 @@
+<div class="container" style="margin-top:16px;">
+		<div class="row">
+			<div class="card col l6 offset-l3">
+				<form class="card-content">
+					<span class="card-title grey-text">Login or Register</span>
+					<div class="row">
+						<div class="input-field">
+							<input id="username"  type="text" class="validate" ng-model="user">
+							<label for="username" >Username</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field">
+							<input type="password" id="password" class="validate" ng-model="pass">
+							<label for="password">Password</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col l3 offset-l3">
+							<button class="btn waves-effect" type="submit" ng-click="login()">Login</button>
+						</div>
+						<div class="col l3">
+							<button class="btn waves-effect" type="submit" ng-click="register()">Register</button>
+						</div>	
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>	
