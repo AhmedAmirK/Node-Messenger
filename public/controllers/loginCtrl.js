@@ -1,10 +1,15 @@
 App.controller('loginCtrl', function($scope,chatSrv,$location,$window){
 
-
-if($window.localStorage.token){
+		//Microsoft Edge								//Chrome
+if($window.localStorage.token == 'null'|| !$window.localStorage.token){
+	//stay here 
+}
+else {
 	$location.path('/chat');
 }
 	
+
+
 $scope.login = function(){
 
 	if(!$scope.user || !$scope.pass){
