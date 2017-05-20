@@ -1,0 +1,33 @@
+<div class="container">
+	<div class="card" style="margin-top:16px;">
+		<div class="row" style="height:450px;">
+
+			<div class="collection with-headers col l4" style="margin-left:16px; border:none; overflow-y:auto; max-height:400px;">
+				<h4 class="collection-header">Users</h4>
+				<a href="" class="collection-item" ng-class="{'active': User==chatUser}" ng-repeat="User in Users" ng-click="chatWith(User)">{{User.username}}</a>
+
+			</div>
+
+			<h5 class="center-align col l4">{{chatUser.username}}</h5>
+			<label class="red-text col l4" style="position:absolute; top:20px; right:120px;" ng-class="{'green-text': chatUser.status}">{{status}}</label>
+			<button class="btn red waves-effect"  style="position:absolute; top:10px; right:10px;" ng-click="logout()">Logout</button>
+
+			<div class="col l7" style="position:absolute; bottom:3px; right:10px;">
+				
+				<ul class="collection" style="border:none; overflow-y:auto; max-height:270px">
+					<li ng-repeat="message in messages | orderBy: 'timestamp' " class="collection-item">
+						<div>
+							<label>{{message.sender}}: </label>
+							{{message.message}}
+							<label class="secondary-content">{{message.timestamp}}</label>
+						</div>
+					</li>
+				</ul>
+				<div class="row">
+					<input class="col l10" type="text" ng-model="text" placeholder="Write Something..">
+					<button class="btn col l2 waves-effect" ng-click="sendMessage(text)">Send</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
