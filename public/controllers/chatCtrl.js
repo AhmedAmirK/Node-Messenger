@@ -1,15 +1,22 @@
-App.controller('chatCtrl',function ($scope,chatSrv,$location,$window) {
+App.controller('chatCtrl',function ($scope,chatSrv,$location,$window, $interval) {
 
 $scope.status="";
 $scope.chatUser=null;
 var active_user_id = $window.localStorage.user_id;
 $scope.username = $window.localStorage.username;
 $scope.messages= [];
+var fetch_messages= null;
+var fetch_users=null;
 
 
 var getUsers = function(){
 
 	chatSrv.getUsers().then(function(res){
+
+		
+		if(res.data.length == $scope.Users){
+			return;
+		}
 
 		$scope.Users= res.data;
 
@@ -33,7 +40,7 @@ $scope.chatWith = function(user){
 		$scope.chatUser.status = res.data.status;
 	});
 
-	chatSrv.getMessages(user._id, active_user_id).then(function (messages_from) { 
+	chatSrv.getMessages(user._id, active_user_id).then(function (messages_from) {  
 		
 		var data = messages_from.data;
 		
@@ -56,6 +63,10 @@ $scope.chatWith = function(user){
 
 			});
 
+			if(messages.length == $scope.messages.length){
+				return;
+			}
+
 			$scope.messages = messages;
 
 			
@@ -72,6 +83,8 @@ $scope.logout = function () {
 	chatSrv.logoutUser().then(function (res) {
 		
 		$window.localStorage.clear();
+		$interval.cancel(fetch_users);
+		$interval.cancel(fetch_messages);
 
 		Materialize.toast('Logged Out', 1000);
 		$location.path('/');
@@ -102,5 +115,13 @@ $scope.sendMessage = function(m) {
 }
 
 getUsers();
+
+fetch_users = $interval(function () {
+	getUsers();
+},4000);
+
+fetch_messages = $interval(function(){
+	$scope.chatWith($scope.chatUser);
+},1500);
 
 });
